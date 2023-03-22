@@ -1,22 +1,40 @@
 import { useState } from "react";
 import axios from "axios";
 import useFetch from "../hooks/useFetch";
+import Spinner from "./Spinner";
 
 const URL = "http://127.0.0.1:8000/";
 
 const CreateStudent = () => {
   const { data: departments, isPending, err } = useFetch(URL + "departments");
-  const [student, setStudent] = useState({
-    faculty: "",
+  const [details, setDetails] = useState({
+    first_name: "",
+    last_name: "",
+    middle_name: "",
+    email: "",
+    title: "",
+    gender: "",
+    date_of_birth: "",
+    nationality: "",
+    state_of_origin: "",
+    local_government: "",
+    address: "",
+    religion: "",
+    phone_number: "",
+    next_of_kin: "",
+    kin_phone_number: "",
+    name_of_sponsor: "",
+    sponsor_address: "",
   });
-  const [biodata, setBiodata] = useState({ first_name: "" });
 
-  const fetchDepartment = () => {};
-  const fetFaculty = () => {};
+  // const fetchDepartment = () => {};
+  // const fetFaculty = () => {};
+  console.log(isPending);
   const handleSubmit = async () => {
     let formData = new FormData();
-    formData.append("student", JSON.stringify(student));
-    formData.append("biodata", biodata);
+    for (let x in details) {
+      formData.append(x, details[x]);
+    }
 
     console.log(formData.keys());
     const response = await axios.post(URL + "students/", formData);
@@ -24,6 +42,7 @@ const CreateStudent = () => {
   };
   return (
     <form className="ui form">
+      {isPending && <Spinner />}
       <h4 className="ui dividing header">Student</h4>
       <div className="required field">
         <label>First Name</label>

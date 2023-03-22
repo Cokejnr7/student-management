@@ -13,6 +13,7 @@ const useFetch = (url) => {
   const handleFetch = async (url) => {
     try {
       const response = await axios.get(url);
+      // console.log(response.data);
       setData(response.data);
       setIsPending(false);
       console.log(data);
@@ -22,6 +23,7 @@ const useFetch = (url) => {
       console.log(e.message);
     }
   };
+  console.log(data);
 
   return { data, isPending, err };
 };
